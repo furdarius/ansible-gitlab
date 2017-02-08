@@ -1,0 +1,51 @@
+---
+- name: Create gitlab directories
+  file: path={{ item.value }} recurse=yes state=directory
+  with_dict: "{{ gitlab_dir }}"
+
+- name: Create SSL certs directory
+  file:
+    path: "{{ gitlab_dir.config }}/ssl"
+    recurse: yes
+    state: directory
+
+- name: Copy SSL certs
+  copy:
+    src: "{{ item }}"
+    dest: "{{ gitlab_dir.config }}/ssl/"
+    owner: root
+    group:  root
+    mode: 0644
+  with_fileglob: "{{ gitlab_cers_folder }}/*"
+
+- name: Copy gitlab.rb config
+  template:
+    src: gitlab.rb.j2
+    dest: "{{ gitlab_dir.config }}/gitlab.rb"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Start gitlab service
+  docker_container:
+    name: gitlab
+    image: "{{ gitlab_image }}"
+    pull: true
+    restart: true
+    ports:
+      - "{{ gitlab_ports.http }}:80"
+      - "{{ gitlab_ports.https }}:443"
+      - "{{ gitlab_ports.ssh }}:22"
+      - "{{ gitlab_ports.registry }}:5000"
+    volumes:
+      - "{{ gitlab_dir.config }}:/etc/gitlab"
+      - "{{ gitlab_dir.logs }}:/var/log/gitlab"
+      - "{{ gitlab_dir.data }}:/var/opt/gitlab"
+    restart_policy: always
+
+- name: Open ports
+  ufw:
+    rule: allow
+    port: "{{ item.value }}"
+    proto: tcp
+  with_dict: "{{ gitlab_ports }}"
