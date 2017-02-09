@@ -3,11 +3,18 @@
 # https://registry.hub.docker.com/u/gitlab/gitlab-ce/
 gitlab_image: "gitlab/gitlab-ce:latest"
 
+# URL on which GitLab will be reachable
+#
+# https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
 gitlab_url: "https://gitlab.example.com"
 
+# SSL certs folder on local machine
+# Example of cert location: /path/to/gitlab/certs/gitlab.example.com.crt
+#
 # https://docs.gitlab.com/omnibus/settings/nginx.html#enable-https
 # http://docs.gitlab.com/ce/administration/container_registry.html#configure-container-registry-under-its-own-domain
 gitlab_cers_folder: /path/to/gitlab/certs
+
 gitlab_nginx:
   ssl_protocols: TLSv1 TLSv1.1 TLSv1.2
   ssl_ciphers: EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH
@@ -26,6 +33,7 @@ gitlab_ports:
   ssh: 22
   registry: 5000
 
+# https://docs.gitlab.com/omnibus/settings/smtp.html
 gitlab_smtp:
   enabled: true
   host: mailtrap.io
@@ -35,14 +43,17 @@ gitlab_smtp:
   tls: true
   domain: example.com
 
+# Email Settings
 gitlab_email:
   enabled: true
   from: gitlab@example.com
   display: Gitlab
   reply: noreply@example.com
 
+# https://docs.gitlab.com/ce/workflow/lfs/lfs_administration.html
 gitlab_lfs: true
 
+# https://gitlab.com/help/security/rack_attack.md
 gitlab_rack_attack:
   enabled: true # Enable/Disable Rack Attack
   maxretry: 10 # Limit the number of Git HTTP authentication attempts per IP
