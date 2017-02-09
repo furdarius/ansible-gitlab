@@ -6,7 +6,7 @@
 - name: Create SSL certs directory
   file:
     path: "{{ gitlab_dir.config }}/ssl"
-    recurse: yes
+    recurse: true
     state: directory
 
 - name: Copy SSL certs
