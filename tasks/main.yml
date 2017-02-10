@@ -16,7 +16,7 @@
     owner: root
     group:  root
     mode: 0644
-  with_fileglob: "{{ gitlab_cers_folder }}/*"
+  with_fileglob: "{{ gitlab_certs_folder }}/*"
 
 - name: Copy gitlab.rb config
   template:

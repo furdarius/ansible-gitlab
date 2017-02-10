@@ -13,7 +13,7 @@ gitlab_url: "https://gitlab.example.com"
 #
 # https://docs.gitlab.com/omnibus/settings/nginx.html#enable-https
 # http://docs.gitlab.com/ce/administration/container_registry.html#configure-container-registry-under-its-own-domain
-gitlab_cers_folder: /path/to/gitlab/certs
+gitlab_certs_folder: /path/to/gitlab/certs
 
 gitlab_nginx:
   ssl_protocols: TLSv1 TLSv1.1 TLSv1.2
