@@ -8,7 +8,7 @@ Start Gitlab Omnibus service as Docker container.
 All variables can be found in [defaults/main.yml](https://github.com/Furdarius/ansible-gitlab/blob/master/defaults/main.yml)
 
 SSL Certificates for Gitlab and Docker-Registry automaticaly will be imported from
-`gitlab_cers_folder` path. This folder should containd 2 certs:
+`gitlab_cers_folder` path. This folder should contain 2 certs:
 `gitlab.example.com.crt`, `registry.example.com.crt`.
 
 ## Requirements
