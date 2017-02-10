@@ -9,3 +9,19 @@ All variables can be found in [defaults/main.yml](https://github.com/Furdarius/a
 ## Requirements
 
 Docker engine [installed](https://docs.docker.com/engine/installation/) on remote machine.
+
+## Playbook example
+
+```yaml
+---
+- hosts: gitlab
+  become: true
+  roles:
+    - gitlab
+  vars:
+    gitlab_url: "https://gitlab.infr.local"
+    registry_url: "https://registry.infr.local"
+    gitlab_cers_folder: "/certs_folder_on_local_machine"
+  tags:
+    - gitlab
+```
