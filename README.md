@@ -1,4 +1,5 @@
 # Ansible Role: GitLab
+[![Build Status](https://travis-ci.org/Furdarius/ansible-gitlab.svg?branch=master)](https://travis-ci.org/Furdarius/ansible-gitlab)
 
 Start Gitlab Omnibus service as Docker container.
 
@@ -21,7 +22,7 @@ Docker engine [installed](https://docs.docker.com/engine/installation/) on remot
   vars:
     gitlab_url: "https://gitlab.infr.local"
     registry_url: "https://registry.infr.local"
-    gitlab_cers_folder: "/certs_folder_on_local_machine"
+    gitlab_cers_folder: "./certs_folder_on_local_machine"
   tags:
     - gitlab
 ```
