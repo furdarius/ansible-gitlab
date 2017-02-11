@@ -12,6 +12,7 @@ before_install:
 install:
   - sudo pip install http://releases.ansible.com/ansible/ansible-2.2.1.0.tar.gz
   - sudo pip install docker-py==1.10.6
+  - sudo pip install netaddr=0.7.19
   - echo -e 'localhost  ansible_connection=local' > tests/inventory
   - echo -e '[defaults]\nroles_path = ../\nhostfile = ./tests/inventory' > ansible.cfg
 

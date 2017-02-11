@@ -13,8 +13,10 @@ SSL Certificates for Gitlab and Docker-Registry automaticaly will be imported fr
 
 ## Requirements
 
-* Docker engine [installed](https://docs.docker.com/engine/installation/) on remote machine.
-* `docker-py >= 1.10.6`
+* [Docker engine](https://docs.docker.com/engine/installation/) >= `1.13.1` installed on remote machine
+	* You can use [ansible-docker](https://github.com/Furdarius/ansible-docker) role to install it.
+* [docker-py](https://pypi.python.org/pypi/docker-py/1.10.6) >= `1.10.6`
+* [python-netaddr](https://pypi.python.org/pypi/netaddr) >= `0.7.19`
 
 ## Playbook example
 
