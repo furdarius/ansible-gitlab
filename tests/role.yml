@@ -3,3 +3,11 @@
   become: true
   roles:
     - ansible-gitlab
+  vars:
+    gitlab_ports:
+      http: 8000
+      https: 8001
+      ssh: 2222
+      registry: 5000
+
+
