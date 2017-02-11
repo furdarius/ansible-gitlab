@@ -3,6 +3,12 @@
 
 Start Gitlab Omnibus service as Docker container.
 
+## Install
+
+```bash
+ansible-galaxy install Furdarius.gitlab
+```
+
 ## Variables
 
 All variables can be found in [defaults/main.yml](https://github.com/Furdarius/ansible-gitlab/blob/master/defaults/main.yml)

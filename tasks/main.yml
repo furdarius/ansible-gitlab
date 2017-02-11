@@ -25,6 +25,7 @@
     owner: root
     group: root
     mode: 0644
+  register: config
 
 - name: Start gitlab service
   docker_container:
@@ -42,6 +43,7 @@
       - "{{ gitlab_dir.logs }}:/var/log/gitlab"
       - "{{ gitlab_dir.data }}:/var/opt/gitlab"
     restart_policy: always
+  when: config.changed
 
 - name: Open ports
   ufw:
