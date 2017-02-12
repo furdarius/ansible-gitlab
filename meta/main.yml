@@ -7,9 +7,9 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-				- trusty
+        - trusty
         - xenial
-				- yakkety
+        - yakkety
   galaxy_tags:
     - gitlab
     - docker
