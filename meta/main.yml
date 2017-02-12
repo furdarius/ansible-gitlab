@@ -2,13 +2,14 @@
 galaxy_info:
   author: Artemiy Ryabinkov
   description: Dockerized Gitlab service
-  company: Travel Management Consulting
   license: MIT
   min_ansible_version: 2.2
   platforms:
     - name: Ubuntu
       versions:
-        - all
+				- trusty
+        - xenial
+				- yakkety
   galaxy_tags:
     - gitlab
     - docker
