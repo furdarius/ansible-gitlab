@@ -3,6 +3,9 @@
 # https://registry.hub.docker.com/u/gitlab/gitlab-ce/
 gitlab_image: "gitlab/gitlab-ce:latest"
 
+# Restart gitlab container even if configuration file wasn't changed
+gitlab_force_restart: false
+
 # URL on which GitLab will be reachable
 #
 # https://docs.gitlab.com/omnibus/settings/configuration.html#configuring-the-external-url-for-gitlab
@@ -15,9 +18,22 @@ gitlab_url: "https://gitlab.example.com"
 # http://docs.gitlab.com/ce/administration/container_registry.html#configure-container-registry-under-its-own-domain
 gitlab_certs_folder: /path/to/gitlab/certs
 
+gitlab_webserver:
+  external_users:
+    - root
+
+gitlab_rails:
+  trusted_proxies: []
+
+gitlab_workhorse:
+  listen_network: unix
+  listen_addr: /var/opt/gitlab/gitlab-workhorse/socket
+
+# https://docs.gitlab.com/omnibus/settings/nginx.html
 gitlab_nginx:
+  enabled: true
   ssl_protocols: TLSv1 TLSv1.1 TLSv1.2
-  ssl_ciphers: EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH
+  ssl_ciphers: ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-AES256-SHA:ECDHE-RSA-AES128-SHA:ECDHE-RSA-DES-CBC3-SHA:AES256-GCM-SHA384:AES128-GCM-SHA256:AES256-SHA256:AES128-SHA256:AES256-SHA:AES128-SHA:DES-CBC3-SHA:!aNULL:!eNULL:!EXPORT:!DES:!MD5:!PSK:!RC4
 
 # Host machine directories for persistent storage
 gitlab_dir:
@@ -32,6 +48,10 @@ gitlab_ports:
   https: 443
   ssh: 22
   registry: 5000
+
+# Gitlab container "--network" param value
+# Available values: bridge | container | host | none
+gitlab_network_mode: bridge
 
 # https://docs.gitlab.com/omnibus/settings/smtp.html
 gitlab_smtp:

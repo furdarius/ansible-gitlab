@@ -33,6 +33,7 @@
     image: "{{ gitlab_image }}"
     pull: true
     restart: true
+    network_mode: '{{ gitlab_network_mode }}'
     ports:
       - "{{ gitlab_ports.http }}:80"
       - "{{ gitlab_ports.https }}:443"
@@ -43,7 +44,7 @@
       - "{{ gitlab_dir.logs }}:/var/log/gitlab"
       - "{{ gitlab_dir.data }}:/var/opt/gitlab"
     restart_policy: always
-  when: config.changed
+  when: config.changed or gitlab_force_restart
 
 - name: Open ports
   ufw:

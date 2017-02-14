@@ -98,7 +98,11 @@ gitlab_rails['gitlab_email_subject_suffix'] = ''
 ###! different machine.
 ###! **Add the IP address for your reverse proxy to the list, otherwise users
 ###!   will appear signed in from that address.**
-# gitlab_rails['trusted_proxies'] = []
+
+# @FIXME: to_json used for converting yaml arrays to ruby arrays. IDK how to do
+# it better.
+# God bless to_json
+gitlab_rails['trusted_proxies'] = {{ gitlab_rails.trusted_proxies | to_json }}
 
 ### Reply by email
 ###! Allow users to comment on issues and merge requests by replying to
@@ -440,11 +444,11 @@ registry_external_url '{{ registry_url }}'
 ##! Docs: https://gitlab.com/gitlab-org/gitlab-workhorse/blob/master/README.md
 ################################################################################
 
-# gitlab_workhorse['enable'] = true
+gitlab_workhorse['enable'] = true
 # gitlab_workhorse['ha'] = false
-# gitlab_workhorse['listen_network'] = "unix"
+gitlab_workhorse['listen_network'] = "{{ gitlab_workhorse.listen_network }}"
 # gitlab_workhorse['listen_umask'] = 000
-# gitlab_workhorse['listen_addr'] = "/var/opt/gitlab/gitlab-workhorse/socket"
+gitlab_workhorse['listen_addr'] = "{{ gitlab_workhorse.listen_addr }}"
 # gitlab_workhorse['auth_backend'] = "http://localhost:8080"
 
 ##! the empty string is the default in gitlab-workhorse option parser
@@ -688,7 +692,8 @@ unicorn['worker_processes'] = {{ gitlab_unicorn.worker_processes }}
 
 ##! When bundled nginx is disabled we need to add the external webserver user to
 ##! the GitLab webserver group.
-# web_server['external_users'] = []
+web_server['external_users'] = {{ gitlab_webserver.external_users | to_json }}
+
 # web_server['username'] = 'gitlab-www'
 # web_server['group'] = 'gitlab-www'
 # web_server['uid'] = nil
@@ -701,7 +706,7 @@ unicorn['worker_processes'] = {{ gitlab_unicorn.worker_processes }}
 ##! Docs: https://docs.gitlab.com/omnibus/settings/nginx.html
 ################################################################################
 
-# nginx['enable'] = true
+nginx['enable'] = {{ gitlab_nginx.enabled | bool | lower }}
 # nginx['client_max_body_size'] = '250m'
 # nginx['redirect_http_to_https'] = false
 # nginx['redirect_http_to_https_port'] = 80
@@ -721,7 +726,7 @@ nginx['ssl_ciphers'] = "{{ gitlab_nginx.ssl_ciphers }}"
 # nginx['ssl_prefer_server_ciphers'] = "on"
 
 ##! **Recommended by: https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html
-##!                   https://cipherli.st/**
+##!                   https://cipherli.st/
 nginx['ssl_protocols'] = "{{ gitlab_nginx.ssl_protocols }}"
 
 ##! **Recommended in: https://nginx.org/en/docs/http/ngx_http_ssl_module.html**
