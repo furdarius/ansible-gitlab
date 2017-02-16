@@ -3,6 +3,14 @@
 # https://registry.hub.docker.com/u/gitlab/gitlab-ce/
 gitlab_image: "gitlab/gitlab-ce:latest"
 
+# Name of gitlab container
+# Option value used as "--name" option when starting container with docker run
+gitlab_container_name: gitlab
+
+# If true, always pull the latest version of an image.
+# Otherwise, will only pull an image when missing.
+gitlab_force_pull: false
+
 # Restart gitlab container even if configuration file wasn't changed
 gitlab_force_restart: false
 
@@ -93,3 +101,10 @@ gitlab_unicorn:
 
 # http://docs.gitlab.com/ce/administration/container_registry.html
 registry_url: "https://registry.example.com"
+
+# Options for restoring gitlab from backup.
+gitlab_restore:
+  restoring: false # Enable restoring from backup
+  backup_file: /path/to/archive/1487067516_2017_02_14_gitlab_backup.tar # Path to backup archive on host machine
+  backup_id: "1487067516_2017_02_14" # Be carefull about double-quotes (Only string format supported)
+  secrets_file: /path/to/secrets/gitlab-secrets.json # Path to gitlab-secrets.json file on host machine

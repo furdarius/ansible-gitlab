@@ -1,0 +1,31 @@
+---
+- name: Copy backup file to remote machine
+  copy:
+    src: "{{ gitlab_restore.backup_file }}"
+    dest: "{{ gitlab_dir.data }}/backups/"
+    owner: root
+    group:  root
+    mode: 0655
+
+- name: Copy gitlab-secrets.json to remote machine
+  copy:
+    src: "{{ gitlab_restore.secrets_file }}"
+    dest: "{{ gitlab_dir.config }}/gitlab-secrets.json"
+    owner: root
+    group:  root
+    mode: 0644
+
+- name: Stop gitlab services
+  shell: docker exec -i {{ gitlab_container_name | quote }} gitlab-ctl stop {{ item }}
+  with_items:
+    - unicorn
+    - sidekiq
+
+- name: Backup restore
+  shell: docker exec -i {{ gitlab_container_name | quote }} gitlab-rake gitlab:backup:restore BACKUP={{ gitlab_restore.backup_id | quote }}
+
+- name: Gitlab reconfigure
+  shell: docker exec -i {{ gitlab_container_name | quote }} gitlab-ctl reconfigure
+
+- name: Start gitlab services
+  shell: docker exec -i {{ gitlab_container_name | quote }} gitlab-ctl start

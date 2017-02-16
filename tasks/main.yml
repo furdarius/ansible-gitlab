@@ -29,10 +29,10 @@
 
 - name: Start gitlab service
   docker_container:
-    name: gitlab
-    image: "{{ gitlab_image }}"
-    pull: true
-    restart: true
+    name: '{{ gitlab_container_name }}'
+    image: '{{ gitlab_image }}'
+    pull: '{{ gitlab_force_pull }}'
+    restart: '{{ config.changed or gitlab_force_restart }}'
     network_mode: '{{ gitlab_network_mode }}'
     ports:
       - "{{ gitlab_ports.http }}:80"
@@ -44,7 +44,6 @@
       - "{{ gitlab_dir.logs }}:/var/log/gitlab"
       - "{{ gitlab_dir.data }}:/var/opt/gitlab"
     restart_policy: always
-  when: config.changed or gitlab_force_restart
 
 - name: Open ports
   ufw:
@@ -52,3 +51,9 @@
     port: "{{ item.value }}"
     proto: tcp
   with_dict: "{{ gitlab_ports }}"
+
+- name: Restore backup
+  include: backup-restore.yml
+  when: gitlab_restore.restoring
+  tags:
+    - backup
