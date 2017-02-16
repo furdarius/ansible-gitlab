@@ -22,10 +22,11 @@
     - sidekiq
 
 - name: Backup restore
-  shell: docker exec -i {{ gitlab_container_name | quote }} gitlab-rake gitlab:backup:restore BACKUP={{ gitlab_restore.backup_id | quote }}
+  shell: docker exec -i {{ gitlab_container_name | quote }} bash -c " yes yes | gitlab-rake gitlab:backup:restore BACKUP={{ gitlab_restore.backup_id | quote }}"
 
 - name: Gitlab reconfigure
   shell: docker exec -i {{ gitlab_container_name | quote }} gitlab-ctl reconfigure
 
 - name: Start gitlab services
-  shell: docker exec -i {{ gitlab_container_name | quote }} gitlab-ctl start
+  shell: docker exec -i {{ gitlab_container_name | quote }} bash -c "gitlab-ctl start"
+  ignore_errors: true
