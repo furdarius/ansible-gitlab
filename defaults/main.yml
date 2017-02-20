@@ -97,7 +97,7 @@ gitlab_rate_limit:
 # https://docs.gitlab.com/ce/install/requirements.html#unicorn-workers
 gitlab_unicorn:
   worker_timeout: 60
-  worker_processes: '{{ ansible_processor_cores }}'
+  worker_processes: '{{ ansible_processor_vcpus }}'
 
 # http://docs.gitlab.com/ce/administration/container_registry.html
 registry_url: "https://registry.example.com"
