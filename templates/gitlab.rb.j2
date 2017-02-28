@@ -511,7 +511,7 @@ unicorn['worker_processes'] = {{ gitlab_unicorn.worker_processes }}
 
 ### Advanced settings
 # unicorn['listen'] = '127.0.0.1'
-# unicorn['port'] = 8080
+unicorn['port'] = {{ gitlab_unicorn.port }}
 # unicorn['socket'] = '/var/opt/gitlab/gitlab-rails/sockets/gitlab.socket'
 # unicorn['pidfile'] = '/opt/gitlab/var/unicorn/unicorn.pid'
 # unicorn['tcp_nopush'] = true

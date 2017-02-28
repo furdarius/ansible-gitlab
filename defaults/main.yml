@@ -98,6 +98,7 @@ gitlab_rate_limit:
 gitlab_unicorn:
   worker_timeout: 60
   worker_processes: '{{ ansible_processor_vcpus }}'
+  port: 8080
 
 # http://docs.gitlab.com/ce/administration/container_registry.html
 registry_url: "https://registry.example.com"
